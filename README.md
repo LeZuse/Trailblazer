@@ -21,8 +21,8 @@ The following options are supported:
 * FIREBASE_REF - *REQUIRED* A string that points to a location in your firebase. Must end with .json. Get more info at [www.firebase.com](http://www.firebase.com)
 * FIREBASE_APPEND - a boolean, defaults to false. If true, the service will append location data into your firebase, rather than replacing it.
 * LOCATION_POLL_INTERVAL - a long that determines how frequently the service checks for a new location
-* LOCATION_ACCURACY - Criteria.ACCURACY_{COURSE, FINE}. See the android Criteria documentation for details. Default is course.
-* LOCATION_POWER - Criteria.POWER_{LOW, MEDIUM, HIGH}. See the android Criteria documentation for details. Default is medium.
+* LOCATION\_ACCURACY - Criteria.ACCURACY\_{COURSE, FINE}. See the android Criteria documentation for details. Default is course.
+* LOCATION\_POWER - Criteria.POWER\_{LOW, MEDIUM, HIGH}. See the android Criteria documentation for details. Default is medium.
 
 Notification options:
 
