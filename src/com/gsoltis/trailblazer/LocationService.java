@@ -28,8 +28,9 @@ import android.os.IBinder;
 import android.util.Log;
 
 public class LocationService extends Service {
-	public static final String LOCATION_CRITERIA = "lc";
 	public static final String LOCATION_POLL_INTERVAL = "lp";
+	public static final String LOCATION_ACCURACY = "la";
+	public static final String LOCATION_POWER = "lw";
 	public static final String FIREBASE_REF = "fb";
 	public static final String FIREBASE_APPEND = "append";
 	
@@ -56,7 +57,8 @@ public class LocationService extends Service {
 	
 	// Settings
 	private boolean isAppend = false;
-	private Criteria locationCriteria = null;
+	private int locationAccuracy = Criteria.ACCURACY_COARSE;
+	private int locationPower = Criteria.POWER_MEDIUM;
 	private long pollInterval = POLL_INTERVAL;
 	private String firebaseRef = URL;
 
@@ -110,10 +112,8 @@ public class LocationService extends Service {
 	@SuppressWarnings("unchecked")
 	private void setupParams(Intent i) {
 		Bundle extras = i.getExtras();
-		Object o = extras.get(LOCATION_CRITERIA);
-		if (o != null && o instanceof Criteria) {
-			locationCriteria = (Criteria)o;
-		}
+		locationAccuracy = extras.getInt(LOCATION_ACCURACY, Criteria.ACCURACY_COARSE);
+		locationPower = extras.getInt(LOCATION_POWER, Criteria.POWER_MEDIUM);
 		isAppend = extras.getBoolean(FIREBASE_APPEND);
 		pollInterval = extras.getLong(LOCATION_POLL_INTERVAL, POLL_INTERVAL);
 		String ref = extras.getString(FIREBASE_REF);
@@ -198,16 +198,12 @@ public class LocationService extends Service {
 	
 	private String getProviderName(LocationManager mgr) {
 		Criteria crit;
-		if (locationCriteria == null) {
-			crit = new Criteria();
-			crit.setAccuracy(Criteria.ACCURACY_COARSE);
-			crit.setAltitudeRequired(false);
-			crit.setBearingRequired(false);
-			crit.setPowerRequirement(Criteria.POWER_MEDIUM);
-			crit.setCostAllowed(false);
-		} else {
-			crit = locationCriteria;
-		}
+		crit = new Criteria();
+		crit.setAccuracy(locationAccuracy);
+		crit.setAltitudeRequired(false);
+		crit.setBearingRequired(false);
+		crit.setPowerRequirement(locationPower);
+		crit.setCostAllowed(false);
 		return mgr.getBestProvider(crit, true);
 	}
 	
@@ -243,7 +239,7 @@ public class LocationService extends Service {
 				currentBest.getProvider());
 		
 		if (!isMoreAccurate) {
-			// Less accuracte
+			// Less accurate
 			return false;
 		} else if (isNewer && isMoreAccurate) {
 			return true;
