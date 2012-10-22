@@ -286,7 +286,7 @@ public class LocationService extends Service {
 		HttpClient client = new DefaultHttpClient();
 		HttpUriRequest req;
 		if (isAppend) {
-			HttpPost post = new HttpPost();
+			HttpPost post = new HttpPost(url);
 			post.setEntity(entity);
 			req = post;
 		} else {
@@ -310,7 +310,6 @@ public class LocationService extends Service {
 			putString(params[0], firebaseRef);
 			return null;
 		}
-		
 	}
 
 }
