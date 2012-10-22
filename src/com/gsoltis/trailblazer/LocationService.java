@@ -40,7 +40,7 @@ public class LocationService extends Service {
 	public static final String NOTIFICATION_TEXT = "nt";
 	
 	private static final long TWO_MINUTES = 1000 * 60 * 2;
-	private static final String URL = "http://data.firebase.com/gsoltis/location/greg.json";
+	private static final String URL = "http://demo.firebase.com/trailblazer/location/greg.json";
 	private static final long POLL_INTERVAL = 1000 * 60 * 5;
 	private static final int SERVICE_ID = 0xba5e;
 	
