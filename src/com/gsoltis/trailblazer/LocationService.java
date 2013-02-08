@@ -40,7 +40,7 @@ public class LocationService extends Service {
 	public static final String NOTIFICATION_TEXT = "nt";
 	
 	private static final long TWO_MINUTES = 1000 * 60 * 2;
-	private static final String URL = "http://demo.firebase.com/trailblazer/location/greg.json";
+	private static final String URL = "https://trailblazer.firebaseio-demo.com/location/lizzy.json";
 	private static final long POLL_INTERVAL = 1000 * 60 * 5;
 	private static final int SERVICE_ID = 0xba5e;
 	
@@ -103,9 +103,11 @@ public class LocationService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent i, int flags, int startId) {
-		setupParams(i);
-		startLocationService();
-		showNotification();
+		if (i != null) {
+			setupParams(i);
+			startLocationService();
+			showNotification();
+		}
 		return START_STICKY;
 	}
 	
@@ -210,8 +212,8 @@ public class LocationService extends Service {
 	private void onNewLocation(Location location) {
 		if (isBetterLocation(location, currentLocation)) {
 			currentLocation = location;
-			sendLocation(currentLocation);
 		}
+		sendLocation(currentLocation);
 	}
 	
 	private boolean isBetterLocation(Location location, Location currentBest) {
@@ -263,10 +265,13 @@ public class LocationService extends Service {
 	
 	private String buildJSON(Location location) {
 		long ts = location.getTime();
+		long updateTs = System.currentTimeMillis();
 		double lat = location.getLatitude();
 		double lon = location.getLongitude();
 		StringBuilder sb = new StringBuilder("{\"ts\":");
 		sb.append(ts)
+			.append(",\"updated\":")
+			.append(updateTs)
 			.append(",\"lat\":")
 			.append(lat)
 			.append(",\"lon\":")
