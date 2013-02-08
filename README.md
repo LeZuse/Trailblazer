@@ -9,7 +9,7 @@ You can start and stop the service with an intent, and the parameters are contro
 
 Using [Firebase](http://www.firebase.com), you can get a realtime feed of location updates as they are broadcast.
 
-For an example app using this service, and a simple google maps page displaying the information, see [here](https://github.com/gsoltis/FindLizzy)
+For an example app using this service, and a simple google maps page displaying the information, see [here](https://github.com/firebase/FindLizzy)
 
 Settings
 --------
